@@ -1,5 +1,5 @@
 import { buildProgramFromSources, loadShadersFromURLS, loadJSONFile, setupWebGL } from "../../libs/utils.js";
-import { ortho, lookAt, flatten } from "../../libs/MV.js";
+import { ortho, perspective, lookAt, flatten } from "../../libs/MV.js";
 import { modelView, loadMatrix, multRotationX, multRotationY, multRotationZ, multScale, multTranslation, popMatrix, pushMatrix } from "../../libs/stack.js";
 
 import * as CUBE from '../../libs/objects/cube.js';
@@ -20,10 +20,17 @@ function setup(shaders, sceneGraph) {
 
     let program = buildProgramFromSources(gl, shaders["shader.vert"], shaders["shader.frag"]);
 
-    let mProjection = ortho(-1 * aspect, aspect, -1, 1, 0.01, 3);
+    let mProjection = ortho(-1 * aspect, aspect, -1, 1, 0.01, 100);
     let mView = lookAt([2, 1.2, 1], [0, 0.6, 0], [0, 1, 0]);
 
     let zoom = 1.0;
+    let isPerspective = false;
+    let isMultiView = false;
+    const mViewFront = lookAt([0, 0.6, 2], [0, 0.6, 0], [0, 1, 0]);
+    const mViewTop = lookAt([0, 2, 0], [0, 0.6, 0], [0, 0, -1]);
+    const mViewLeft = lookAt([-2, 0.6, 0], [0, 0.6, 0], [0, 1, 0]);
+    const mViewOblique = lookAt([2, 1.2, 1], [0, 0.6, 0], [0, 1, 0]);
+
 
     //recursivo para encontrar o no
     function findNode(name, node) {
@@ -39,10 +46,72 @@ function setup(shaders, sceneGraph) {
         return null;
     }
 
+    function createWheelNode(name, translation) {
+        //no pai -> rotacao e translacao inicial (estatico), filho -> escala e rotacoes (animado)
+        let pivot = {
+            name: name + "_pivot",
+            transform: {
+                translation: translation,
+                rotation: [90, 90, 0],
+                scale: [1, 1, 1]
+            },
+            children: [
+                {
+                    name: name + "_model",
+                    primitive: "TORUS",
+                    transform: {
+                        translation: [0, 0, 0],
+                        rotation: [0, 0, 0],
+                        scale: [0.15, 0.15, 0.15]
+                    },
+                    children: []
+                }
+            ]
+        };
+        return pivot
+    }
+
     const cabinNode = findNode("cabin", sceneGraph);
     const cannonNode = findNode("cannon", sceneGraph);
-    const wheelNode = findNode("wheel", sceneGraph);
-
+    const baseNode = findNode("base", sceneGraph);
+    let wheelNodes = [];
+    let x_left = -0.45;
+    let x_right = 0.45;
+    let y_pos = 0.1;
+    let z_start = -0.7;
+    let z_spacing = 0.28;
+    for (let i = 0; i < 12; i++) {
+        let name = "wheel_L";
+        let x = x_left;
+        if (i < 6) {
+            name = "wheel_R"
+            x = x_right;
+        }
+        let index = i % 6;
+        let wheelName = name + index;
+        let z_pos = z_start + index * z_spacing;
+        let wheel = createWheelNode(wheelName, [x, y_pos, z_pos])
+        baseNode.children.push(wheel);
+        //apenas o no animado
+        wheelNodes.push(wheel.children[0]);
+    }
+    const gridSize = 10;
+    const tileSize = 0.5;
+    for (let i = -gridSize; i <= gridSize; i++) {
+        for (let j = -gridSize; j <= gridSize; j++) {
+            let tileNode = {
+                name: "tile_" + i + "_" + j,
+                primitive: "CUBE",
+                transform: {
+                    translation: [i * tileSize, -0.01, j * tileSize],
+                    rotation: [0, 0, 0],
+                    scale: [tileSize * 0.95, 0.01, tileSize * 0.95]
+                },
+                children: []
+            };
+            sceneGraph.children.push(tileNode);
+        }
+    }
 
     /** Model parameters */
     let ag = 0;
@@ -55,26 +124,41 @@ function setup(shaders, sceneGraph) {
 
     document.onkeydown = function (event) {
         switch (event.key) {
+            case '0':
+                //altera modo de vista 
+                isMultiView = !isMultiView;
+                break;
             case '1':
-                // Front view
-                mView = lookAt([0, 0.6, 1], [0, 0.6, 0], [0, 1, 0]);
+                //vista frontal
+                mView = mViewFront;
+                isMultiView = false;
                 break;
             case '2':
-                // Top view
-                mView = lookAt([0, 1.6, 0], [0, 0.6, 0], [0, 0, -1]);
+                ///vista para esquerda
+                mView = mViewLeft;
+                isMultiView = false;
                 break;
             case '3':
-                // Right view
-                mView = lookAt([1, 0.6, 0.], [0, 0.6, 0], [0, 1, 0]);
+                //vista para cima
+                mView = mViewTop;
+                isMultiView = false;
                 break;
             case '4':
-                mView = lookAt([2, 1.2, 1], [0, 0.6, 0], [0, 1, 0]);
+                //vista obliqua
+                mView = mViewOblique;
+                isMultiView = false;
                 break;
             case '9':
-                mode = gl.LINES;
+                isPerspective = !isPerspective;
                 break;
             case '0':
-                mode = gl.TRIANGLES;
+                break;
+            case ' ':
+                if (mode === gl.LINES) {
+                    mode = gl.TRIANGLES;
+                } else {
+                    mode = gl.LINES;
+                }
                 break;
             case 'p':
                 ag = Math.min(0.050, ag + 0.005);
@@ -83,10 +167,14 @@ function setup(shaders, sceneGraph) {
                 ag = Math.max(0, ag - 0.005);
                 break;
             case 'q':
-                wheelNode.transform.rotation[0] += 1;
+                for (let node of wheelNodes) {
+                    node.transform.rotation[1] += 1;
+                }
                 break;
             case 'e':
-                wheelNode.transform.rotation[0] -= 1;
+                for (let node of wheelNodes) {
+                    node.transform.rotation[1] -= 1;
+                }
                 break;
             case 'w':
                 //roda canhao para cima (eixo X)
@@ -129,8 +217,13 @@ function setup(shaders, sceneGraph) {
 
         aspect = canvas.width / canvas.height;
 
-        gl.viewport(0, 0, canvas.width, canvas.height);
-        mProjection = ortho(-aspect * zoom, aspect * zoom, -zoom, zoom, 0.01, 3);
+        /*gl.viewport(0, 0, canvas.width, canvas.height);
+        if (isPerspective) {
+            mProjection = perspective(60, aspect, 0.01, 100);
+        } else {
+            mProjection = ortho(-aspect * zoom, aspect * zoom, -zoom, zoom, 0.01, 100);
+        }*/
+
     }
 
     const primitives = {
@@ -177,22 +270,60 @@ function setup(shaders, sceneGraph) {
     function uploadMatrix(name, m) {
         gl.uniformMatrix4fv(gl.getUniformLocation(program, name), false, flatten(m));
     }
+    function drawScene(viewMatrix) {
+        //criar a cena
+        loadMatrix(viewMatrix);
+        traverse(sceneGraph);
+    }
+    function setAndUploadProjection(currentAspect) {
+        //fazer a projecao
+        if (isPerspective) {
+            mProjection = perspective(60, currentAspect, 0.01, 100);
+        } else {
+            mProjection = ortho(-currentAspect * zoom, currentAspect * zoom, -zoom, zoom, 0.01, 100);
+        }
+        uploadProjection();
+    }
 
     function render() {
         window.requestAnimationFrame(render);
-
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-
         gl.useProgram(program);
 
-        // Send the mProjection matrix to the GLSL program
-        mProjection = ortho(-aspect * zoom, aspect * zoom, -zoom, zoom, 0.01, 3);
-        uploadProjection(mProjection);
+        const w = canvas.width;
+        const h = canvas.height;
 
-        // Load the ModelView matrix with the Worl to Camera (View) matrix
-        loadMatrix(mView);
+        //multivista
+        if (isMultiView) {
+            const w2 = w / 2;
+            const h2 = h / 2;
+            const viewportAspect = w2 / h2;
 
-        traverse(sceneGraph);
+            //frontal (canto inferior esquerdo)
+            gl.viewport(0, 0, w2, h2);
+            setAndUploadProjection(viewportAspect);
+            drawScene(mViewFront);
+
+            //cima (canto superior esquerdo)
+            gl.viewport(0, h2, w2, h2);
+            setAndUploadProjection(viewportAspect);
+            drawScene(mViewTop);
+
+            //esquerda (canto superior direito)
+            gl.viewport(w2, h2, w2, h2);
+            setAndUploadProjection(viewportAspect);
+            drawScene(mViewLeft);
+
+            //obliqua (canto inferior direito)
+            gl.viewport(w2, 0, w2, h2);
+            setAndUploadProjection(viewportAspect);
+            drawScene(mViewOblique);
+        } else {
+            //vista unica (ecra inteiro)
+            gl.viewport(0, 0, w, h);
+            setAndUploadProjection(aspect);
+            drawScene(mView);
+        }
     }
 }
 

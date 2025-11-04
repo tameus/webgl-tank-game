@@ -38,30 +38,7 @@
           0.8
         ]
       },
-      "children": [
-        {
-          "name": "wheel",
-          "primitive": "TORUS",
-          "transform": {
-            "translation": [
-              -0.6,
-              0.1,
-              0.5
-            ],
-            "rotation": [
-              90,
-              90,
-              0
-            ],
-            "scale": [
-              0.15,
-              0.15,
-              0.15
-            ]
-          },
-          "children": []
-        }
-      ]
+      "children": []
     },
     {
       "name": "cabin",
