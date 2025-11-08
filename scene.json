@@ -1,6 +1,7 @@
 {
   "name": "root",
-  "transform": {
+  "type": "internal",
+  "transforms": {
     "translation": [
       0,
       0,
@@ -19,18 +20,12 @@
   },
   "children": [
     {
-      "name": "base",
-      "primitive": "CUBE",
-      "color": [
-        0.2,
-        0.5,
-        0.2,
-        1.0
-      ],
-      "transform": {
+      "name": "tank",
+      "type": "internal",
+      "transforms": {
         "translation": [
           0,
-          0.1,
+          0.14,
           0
         ],
         "rotation": [
@@ -39,25 +34,26 @@
           0
         ],
         "scale": [
-          0.5,
-          0.2,
-          0.8
+          1,
+          1,
+          1
         ]
       },
       "children": [
         {
-          "name": "cabin",
+          "name": "base_1",
+          "type": "leaf",
           "primitive": "CUBE",
           "color": [
-            0.2,
-            0.5,
+            0.3,
+            0.4,
             0.2,
             1.0
           ],
-          "transform": {
+          "transforms": {
             "translation": [
               0,
-              0.8,
+              -0.04,
               0
             ],
             "rotation": [
@@ -66,19 +62,209 @@
               0
             ],
             "scale": [
-              0.4,
-              0.6,
-              0.5
+              0.65,
+              0.1,
+              1.75
+            ]
+          }
+        },
+        {
+          "name": "base_2",
+          "type": "leaf",
+          "primitive": "CUBE",
+          "color": [
+            0.3,
+            0.4,
+            0.2,
+            1.0
+          ],
+          "transforms": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              0.65,
+              0.04,
+              1.8
+            ]
+          }
+        },
+        {
+          "name": "base_3",
+          "type": "leaf",
+          "primitive": "CUBE",
+          "color": [
+            0.4,
+            0.5,
+            0.3,
+            1.0
+          ],
+          "transforms": {
+            "translation": [
+              0,
+              0.07,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              0.75,
+              0.10,
+              1.7
+            ]
+          }
+        },
+        {
+          "name": "base_4",
+          "type": "leaf",
+          "primitive": "CUBE",
+          "color": [
+            0.35,
+            0.45,
+            0.25,
+            1.0
+          ],
+          "transforms": {
+            "translation": [
+              0,
+              0.16,
+              -0.05
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              0.66,
+              0.08,
+              1.5
+            ]
+          }
+        },
+        {
+          "name": "cabin",
+          "type": "internal",
+          "transforms": {
+            "translation": [
+              0,
+              0.32,
+              -0.3
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
             ]
           },
           "children": [
             {
-              "name": "cannon_connect",
-              "transform": {
+              "name": "cabin_primitive",
+              "type": "leaf",
+              "primitive": "CUBE",
+              "color": [
+                0.38,
+                0.48,
+                0.28,
+                1.0
+              ],
+              "transforms": {
                 "translation": [
                   0,
+                  -0.07,
+                  0
+                ],
+                "rotation": [
                   0,
+                  0,
+                  0
+                ],
+                "scale": [
+                  0.40,
+                  0.10,
+                  0.40
+                ]
+              }
+            },
+            {
+              "name": "cabin_cupola",
+              "type": "leaf",
+              "primitive": "SPHERE",
+              "color": [
+                0.6,
+                0.6,
+                0.6,
+                1.0
+              ],
+              "transforms": {
+                "translation": [
+                  0,
+                  -0.03,
+                  0
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0
+                ],
+                "scale": [
+                  0.40,
+                  0.1,
                   0.4
+                ]
+              }
+            },
+            {
+              "name": "cabin_hatch",
+              "type": "leaf",
+              "primitive": "CYLINDER",
+              "color": [
+                0.4,
+                0.4,
+                0.4,
+                1.0
+              ],
+              "transforms": {
+                "translation": [
+                  0,
+                  0.015,
+                  0
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0
+                ],
+                "scale": [
+                  0.15,
+                  0.04,
+                  0.15
+                ]
+              }
+            },
+            {
+              "name": "cannonAssembly",
+              "type": "internal",
+              "transforms": {
+                "translation": [
+                  0,
+                  -0.07,
+                  0.2
                 ],
                 "rotation": [
                   0,
@@ -93,19 +279,48 @@
               },
               "children": [
                 {
-                  "name": "cannon",
+                  "name": "cannonPivot",
+                  "type": "leaf",
                   "primitive": "CYLINDER",
                   "color": [
-                    0.2,
-                    0.5,
-                    0.2,
+                    0.4,
+                    0.4,
+                    0.4,
                     1.0
                   ],
-                  "transform": {
+                  "transforms": {
                     "translation": [
                       0,
-                      0.0,
-                      0.5
+                      0,
+                      0
+                    ],
+                    "rotation": [
+                      0,
+                      0,
+                      90
+                    ],
+                    "scale": [
+                      0.08,
+                      0.08,
+                      0.08
+                    ]
+                  }
+                },
+                {
+                  "name": "cannonBarrel",
+                  "type": "leaf",
+                  "primitive": "CYLINDER",
+                  "color": [
+                    0.3,
+                    0.3,
+                    0.3,
+                    1.0
+                  ],
+                  "transforms": {
+                    "translation": [
+                      0,
+                      0,
+                      0.405
                     ],
                     "rotation": [
                       90,
@@ -113,16 +328,883 @@
                       0
                     ],
                     "scale": [
-                      0.1,
-                      1,
-                      0.25
+                      0.04,
+                      1.3,
+                      0.04
                     ]
-                  },
-                  "children": []
+                  }
+                },
+                {
+                  "name": "cannonMuzzle",
+                  "type": "leaf",
+                  "primitive": "CYLINDER",
+                  "color": [
+                    0.35,
+                    0.35,
+                    0.35,
+                    1.0
+                  ],
+                  "transforms": {
+                    "translation": [
+                      0,
+                      0,
+                      1.05
+                    ],
+                    "rotation": [
+                      90,
+                      0,
+                      0
+                    ],
+                    "scale": [
+                      0.06,
+                      0.1,
+                      0.06
+                    ]
+                  }
                 }
               ]
             }
           ]
+        },
+        {
+          "name": "axle_1",
+          "type": "leaf",
+          "primitive": "CYLINDER",
+          "color": [
+            0.45,
+            0.45,
+            0.45,
+            1.0
+          ],
+          "transforms": {
+            "translation": [
+              0,
+              -0.065,
+              -0.8
+            ],
+            "rotation": [
+              0,
+              0,
+              90
+            ],
+            "scale": [
+              0.02,
+              0.7,
+              0.02
+            ]
+          }
+        },
+        {
+          "name": "axle_2",
+          "type": "leaf",
+          "primitive": "CYLINDER",
+          "color": [
+            0.45,
+            0.45,
+            0.45,
+            1.0
+          ],
+          "transforms": {
+            "translation": [
+              0,
+              -0.065,
+              -0.48
+            ],
+            "rotation": [
+              0,
+              0,
+              90
+            ],
+            "scale": [
+              0.02,
+              0.7,
+              0.02
+            ]
+          }
+        },
+        {
+          "name": "axle_3",
+          "type": "leaf",
+          "primitive": "CYLINDER",
+          "color": [
+            0.45,
+            0.45,
+            0.45,
+            1.0
+          ],
+          "transforms": {
+            "translation": [
+              0,
+              -0.065,
+              -0.16
+            ],
+            "rotation": [
+              0,
+              0,
+              90
+            ],
+            "scale": [
+              0.02,
+              0.7,
+              0.02
+            ]
+          }
+        },
+        {
+          "name": "axle_4",
+          "type": "leaf",
+          "primitive": "CYLINDER",
+          "color": [
+            0.45,
+            0.45,
+            0.45,
+            1.0
+          ],
+          "transforms": {
+            "translation": [
+              0,
+              -0.065,
+              0.16
+            ],
+            "rotation": [
+              0,
+              0,
+              90
+            ],
+            "scale": [
+              0.02,
+              0.7,
+              0.02
+            ]
+          }
+        },
+        {
+          "name": "axle_5",
+          "type": "leaf",
+          "primitive": "CYLINDER",
+          "color": [
+            0.45,
+            0.45,
+            0.45,
+            1.0
+          ],
+          "transforms": {
+            "translation": [
+              0,
+              -0.065,
+              0.48
+            ],
+            "rotation": [
+              0,
+              0,
+              90
+            ],
+            "scale": [
+              0.02,
+              0.7,
+              0.02
+            ]
+          }
+        },
+        {
+          "name": "axle_6",
+          "type": "leaf",
+          "primitive": "CYLINDER",
+          "color": [
+            0.45,
+            0.45,
+            0.45,
+            1.0
+          ],
+          "transforms": {
+            "translation": [
+              0,
+              -0.065,
+              0.8
+            ],
+            "rotation": [
+              0,
+              0,
+              90
+            ],
+            "scale": [
+              0.02,
+              0.7,
+              0.02
+            ]
+          }
+        },
+        {
+          "name": "cap_L1",
+          "type": "leaf",
+          "primitive": "CYLINDER",
+          "color": [
+            0.7,
+            0.7,
+            0.7,
+            1.0
+          ],
+          "transforms": {
+            "translation": [
+              -0.351,
+              -0.065,
+              -0.8
+            ],
+            "rotation": [
+              0,
+              0,
+              90
+            ],
+            "scale": [
+              0.065,
+              0.02,
+              0.065
+            ]
+          }
+        },
+        {
+          "name": "cap_L2",
+          "type": "leaf",
+          "primitive": "CYLINDER",
+          "color": [
+            0.7,
+            0.7,
+            0.7,
+            1.0
+          ],
+          "transforms": {
+            "translation": [
+              -0.351,
+              -0.065,
+              -0.48
+            ],
+            "rotation": [
+              0,
+              0,
+              90
+            ],
+            "scale": [
+              0.065,
+              0.02,
+              0.065
+            ]
+          }
+        },
+        {
+          "name": "cap_L3",
+          "type": "leaf",
+          "primitive": "CYLINDER",
+          "color": [
+            0.7,
+            0.7,
+            0.7,
+            1.0
+          ],
+          "transforms": {
+            "translation": [
+              -0.351,
+              -0.065,
+              -0.16
+            ],
+            "rotation": [
+              0,
+              0,
+              90
+            ],
+            "scale": [
+              0.065,
+              0.02,
+              0.065
+            ]
+          }
+        },
+        {
+          "name": "cap_L4",
+          "type": "leaf",
+          "primitive": "CYLINDER",
+          "color": [
+            0.7,
+            0.7,
+            0.7,
+            1.0
+          ],
+          "transforms": {
+            "translation": [
+              -0.351,
+              -0.065,
+              0.16
+            ],
+            "rotation": [
+              0,
+              0,
+              90
+            ],
+            "scale": [
+              0.065,
+              0.02,
+              0.065
+            ]
+          }
+        },
+        {
+          "name": "cap_L5",
+          "type": "leaf",
+          "primitive": "CYLINDER",
+          "color": [
+            0.7,
+            0.7,
+            0.7,
+            1.0
+          ],
+          "transforms": {
+            "translation": [
+              -0.351,
+              -0.065,
+              0.48
+            ],
+            "rotation": [
+              0,
+              0,
+              90
+            ],
+            "scale": [
+              0.065,
+              0.02,
+              0.065
+            ]
+          }
+        },
+        {
+          "name": "cap_L6",
+          "type": "leaf",
+          "primitive": "CYLINDER",
+          "color": [
+            0.7,
+            0.7,
+            0.7,
+            1.0
+          ],
+          "transforms": {
+            "translation": [
+              -0.351,
+              -0.065,
+              0.8
+            ],
+            "rotation": [
+              0,
+              0,
+              90
+            ],
+            "scale": [
+              0.065,
+              0.02,
+              0.065
+            ]
+          }
+        },
+        {
+          "name": "cap_R1",
+          "type": "leaf",
+          "primitive": "CYLINDER",
+          "color": [
+            0.7,
+            0.7,
+            0.7,
+            1.0
+          ],
+          "transforms": {
+            "translation": [
+              0.351,
+              -0.065,
+              -0.8
+            ],
+            "rotation": [
+              0,
+              0,
+              90
+            ],
+            "scale": [
+              0.065,
+              0.02,
+              0.065
+            ]
+          }
+        },
+        {
+          "name": "cap_R2",
+          "type": "leaf",
+          "primitive": "CYLINDER",
+          "color": [
+            0.7,
+            0.7,
+            0.7,
+            1.0
+          ],
+          "transforms": {
+            "translation": [
+              0.351,
+              -0.065,
+              -0.48
+            ],
+            "rotation": [
+              0,
+              0,
+              90
+            ],
+            "scale": [
+              0.065,
+              0.02,
+              0.065
+            ]
+          }
+        },
+        {
+          "name": "cap_R3",
+          "type": "leaf",
+          "primitive": "CYLINDER",
+          "color": [
+            0.7,
+            0.7,
+            0.7,
+            1.0
+          ],
+          "transforms": {
+            "translation": [
+              0.351,
+              -0.065,
+              -0.16
+            ],
+            "rotation": [
+              0,
+              0,
+              90
+            ],
+            "scale": [
+              0.065,
+              0.02,
+              0.065
+            ]
+          }
+        },
+        {
+          "name": "cap_R4",
+          "type": "leaf",
+          "primitive": "CYLINDER",
+          "color": [
+            0.7,
+            0.7,
+            0.7,
+            1.0
+          ],
+          "transforms": {
+            "translation": [
+              0.351,
+              -0.065,
+              0.16
+            ],
+            "rotation": [
+              0,
+              0,
+              90
+            ],
+            "scale": [
+              0.065,
+              0.02,
+              0.065
+            ]
+          }
+        },
+        {
+          "name": "cap_R5",
+          "type": "leaf",
+          "primitive": "CYLINDER",
+          "color": [
+            0.7,
+            0.7,
+            0.7,
+            1.0
+          ],
+          "transforms": {
+            "translation": [
+              0.351,
+              -0.065,
+              0.48
+            ],
+            "rotation": [
+              0,
+              0,
+              90
+            ],
+            "scale": [
+              0.065,
+              0.02,
+              0.065
+            ]
+          }
+        },
+        {
+          "name": "cap_R6",
+          "type": "leaf",
+          "primitive": "CYLINDER",
+          "color": [
+            0.7,
+            0.7,
+            0.7,
+            1.0
+          ],
+          "transforms": {
+            "translation": [
+              0.351,
+              -0.065,
+              0.8
+            ],
+            "rotation": [
+              0,
+              0,
+              90
+            ],
+            "scale": [
+              0.065,
+              0.02,
+              0.065
+            ]
+          }
+        },
+        {
+          "name": "wheel_L1",
+          "type": "leaf",
+          "primitive": "TORUS",
+          "color": [
+            0.1,
+            0.1,
+            0.1,
+            1.0
+          ],
+          "transforms": {
+            "translation": [
+              -0.35,
+              -0.065,
+              -0.8
+            ],
+            "rotation": [
+              0,
+              0,
+              90
+            ],
+            "scale": [
+              0.11428571428571428,
+              0.15,
+              0.11428571428571428
+            ]
+          }
+        },
+        {
+          "name": "wheel_L2",
+          "type": "leaf",
+          "primitive": "TORUS",
+          "color": [
+            0.1,
+            0.1,
+            0.1,
+            1.0
+          ],
+          "transforms": {
+            "translation": [
+              -0.35,
+              -0.065,
+              -0.48
+            ],
+            "rotation": [
+              0,
+              0,
+              90
+            ],
+            "scale": [
+              0.11428571428571428,
+              0.15,
+              0.11428571428571428
+            ]
+          }
+        },
+        {
+          "name": "wheel_L3",
+          "type": "leaf",
+          "primitive": "TORUS",
+          "color": [
+            0.1,
+            0.1,
+            0.1,
+            1.0
+          ],
+          "transforms": {
+            "translation": [
+              -0.35,
+              -0.065,
+              -0.16
+            ],
+            "rotation": [
+              0,
+              0,
+              90
+            ],
+            "scale": [
+              0.11428571428571428,
+              0.15,
+              0.11428571428571428
+            ]
+          }
+        },
+        {
+          "name": "wheel_L4",
+          "type": "leaf",
+          "primitive": "TORUS",
+          "color": [
+            0.1,
+            0.1,
+            0.1,
+            1.0
+          ],
+          "transforms": {
+            "translation": [
+              -0.35,
+              -0.065,
+              0.16
+            ],
+            "rotation": [
+              0,
+              0,
+              90
+            ],
+            "scale": [
+              0.11428571428571428,
+              0.15,
+              0.11428571428571428
+            ]
+          }
+        },
+        {
+          "name": "wheel_L5",
+          "type": "leaf",
+          "primitive": "TORUS",
+          "color": [
+            0.1,
+            0.1,
+            0.1,
+            1.0
+          ],
+          "transforms": {
+            "translation": [
+              -0.35,
+              -0.065,
+              0.48
+            ],
+            "rotation": [
+              0,
+              0,
+              90
+            ],
+            "scale": [
+              0.11428571428571428,
+              0.15,
+              0.11428571428571428
+            ]
+          }
+        },
+        {
+          "name": "wheel_L6",
+          "type": "leaf",
+          "primitive": "TORUS",
+          "color": [
+            0.1,
+            0.1,
+            0.1,
+            1.0
+          ],
+          "transforms": {
+            "translation": [
+              -0.35,
+              -0.065,
+              0.8
+            ],
+            "rotation": [
+              0,
+              0,
+              90
+            ],
+            "scale": [
+              0.11428571428571428,
+              0.15,
+              0.11428571428571428
+            ]
+          }
+        },
+        {
+          "name": "wheel_R1",
+          "type": "leaf",
+          "primitive": "TORUS",
+          "color": [
+            0.1,
+            0.1,
+            0.1,
+            1.0
+          ],
+          "transforms": {
+            "translation": [
+              0.35,
+              -0.065,
+              -0.8
+            ],
+            "rotation": [
+              0,
+              0,
+              90
+            ],
+            "scale": [
+              0.11428571428571428,
+              0.15,
+              0.11428571428571428
+            ]
+          }
+        },
+        {
+          "name": "wheel_R2",
+          "type": "leaf",
+          "primitive": "TORUS",
+          "color": [
+            0.1,
+            0.1,
+            0.1,
+            1.0
+          ],
+          "transforms": {
+            "translation": [
+              0.35,
+              -0.065,
+              -0.48
+            ],
+            "rotation": [
+              0,
+              0,
+              90
+            ],
+            "scale": [
+              0.11428571428571428,
+              0.15,
+              0.11428571428571428
+            ]
+          }
+        },
+        {
+          "name": "wheel_R3",
+          "type": "leaf",
+          "primitive": "TORUS",
+          "color": [
+            0.1,
+            0.1,
+            0.1,
+            1.0
+          ],
+          "transforms": {
+            "translation": [
+              0.35,
+              -0.065,
+              -0.16
+            ],
+            "rotation": [
+              0,
+              0,
+              90
+            ],
+            "scale": [
+              0.11428571428571428,
+              0.15,
+              0.11428571428571428
+            ]
+          }
+        },
+        {
+          "name": "wheel_R4",
+          "type": "leaf",
+          "primitive": "TORUS",
+          "color": [
+            0.1,
+            0.1,
+            0.1,
+            1.0
+          ],
+          "transforms": {
+            "translation": [
+              0.35,
+              -0.065,
+              0.16
+            ],
+            "rotation": [
+              0,
+              0,
+              90
+            ],
+            "scale": [
+              0.11428571428571428,
+              0.15,
+              0.11428571428571428
+            ]
+          }
+        },
+        {
+          "name": "wheel_R5",
+          "type": "leaf",
+          "primitive": "TORUS",
+          "color": [
+            0.1,
+            0.1,
+            0.1,
+            1.0
+          ],
+          "transforms": {
+            "translation": [
+              0.35,
+              -0.065,
+              0.48
+            ],
+            "rotation": [
+              0,
+              0,
+              90
+            ],
+            "scale": [
+              0.11428571428571428,
+              0.15,
+              0.11428571428571428
+            ]
+          }
+        },
+        {
+          "name": "wheel_R6",
+          "type": "leaf",
+          "primitive": "TORUS",
+          "color": [
+            0.1,
+            0.1,
+            0.1,
+            1.0
+          ],
+          "transforms": {
+            "translation": [
+              0.35,
+              -0.065,
+              0.8
+            ],
+            "rotation": [
+              0,
+              0,
+              90
+            ],
+            "scale": [
+              0.11428571428571428,
+              0.15,
+              0.11428571428571428
+            ]
+          }
         }
       ]
     }
