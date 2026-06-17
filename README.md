@@ -7,7 +7,7 @@ Interactive 3D tank game built from scratch in WebGL.
 
 ## Demo
 
-**[Play in browser](https://tameus.github.io/CGI_proj2)**
+**[Play in browser](https://tameus.github.io/webgl-tank-game)**
 
 ## What Was Built
 
